@@ -1,0 +1,32 @@
+---
+ - hosts: all
+   user: vagrant
+   become: yes
+   vars:
+    - app_name: flask_project
+    - listen_addr: 0.0.0.0
+    - listen_port: 5000
+    - app_dir: /opt/challenge
+    - base_dir: /Users/kerem/App/vagrant-flask-ansible-example/
+    - ansible_template_dir: "{{ base_dir }}/ansible/templates/"
+    - src_dir: "{{ base_dir }}/src"
+   tasks:
+    - name: Install Requirement Packages
+      apt: pkg={{item}} state=installed update_cache=true
+      with_items:
+        - python-pip
+        - python-virtualenv
+        - supervisor
+        - gunicorn
+    - name: Create App Directory
+      file: path={{app_dir}} state=directory
+    - name: Install Flask
+      pip: name={{item}} virtualenv={{app_dir}} virtualenv_command=virtualenv
+      with_items:
+         - flask
+    - name: Copy Src to Dest
+      copy: src={{src_dir}} dest={{app_dir}}
+    - name: Add SuperVisior Conf
+      template: src={{ansible_template_dir}}/supervisior.j2 dest=/etc/supervisor/conf.d/{{app_name}}.conf
+    - name: Application Start
+      supervisorctl: name={{app_name}} state=present
