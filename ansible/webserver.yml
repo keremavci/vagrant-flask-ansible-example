@@ -28,5 +28,9 @@
       copy: src={{src_dir}} dest={{app_dir}}
     - name: Add SuperVisior Conf
       template: src={{ansible_template_dir}}/supervisior.j2 dest=/etc/supervisor/conf.d/{{app_name}}.conf
-    - name: Application Start
+    - name: Add Aapplication to SuperVisior
       supervisorctl: name={{app_name}} state=present
+      notify: restart supervisor
+   handlers:
+    - name: restart supervisor
+      supervisorctl: name={{app_name}} state=started
