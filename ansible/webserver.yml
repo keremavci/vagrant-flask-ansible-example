@@ -1,5 +1,5 @@
 ---
- - hosts: webserver
+ - hosts: exampleflaskwebserver
    user: vagrant
    become: yes
    vars:
@@ -10,6 +10,9 @@
     - base_dir: ../
     - ansible_template_dir: "{{ base_dir }}/ansible/templates/"
     - src_dir: "{{ base_dir }}/src/"
+    - app_user_name: testuser
+    #python -c 'import crypt; print crypt.crypt("This is my Password", "testpasswd")'
+    - app_user_password : testpasswd
    tasks:
     - name: Install Requirement Packages
       apt: pkg={{item}} state=installed update_cache=true
@@ -19,13 +22,15 @@
         - python-virtualenv
         - supervisor
         - gunicorn
+    - name: Add user
+      user: name={{app_user_name}} password={{app_user_password}}
     - name: Create App Directory
-      file: path={{app_dir}} state=directory
+      file: path={{app_dir}} state=directory owner={{app_user_name}}
     - name: Copy Src to Dest
-      copy: src={{ src_dir }} dest={{app_dir}}
+      copy: src={{ src_dir }} dest={{app_dir}} owner={{app_user_name}}
     - name: Install Flask
       pip: name=flask
-    - name: Add SuperVisior Conf
-      template: src={{ansible_template_dir}}/supervisior.j2 dest=/etc/supervisor/conf.d/{{app_name}}.conf
-    - name: Add Application to SuperVisior
+    - name: Add SuperVisor Conf
+      template: src={{ansible_template_dir}}/supervisor.j2 dest=/etc/supervisor/conf.d/{{app_name}}.conf
+    - name: Add Application to SuperVisor
       supervisorctl: name={{app_name}} state=present
