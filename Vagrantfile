@@ -24,6 +24,6 @@ Vagrant.configure(2) do |config|
       ansible.inventory_path = "ansible/hosts"
       ansible.playbook = "ansible/webserver.yml"
       ansible.limit = "all"
-      ansible.verbose = true 
+  #   ansible.verbose = true 
  end
 end
