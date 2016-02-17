@@ -15,7 +15,7 @@ Vagrant.configure(2) do |config|
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  config.vm.network "public_network"
+  #config.vm.network "public_network"
 
   config.vm.provider "virtualbox" do |challengevb|
   #   # Display the VirtualBox GUI when booting the machine
@@ -30,6 +30,7 @@ Vagrant.configure(2) do |config|
   
  config.vm.provision :ansible do |ansible|
       ansible.playbook = "ansible/webserver.yml"
+      ansible.verbose = true 
  end
 
   # Enable provisioning with a shell script. Additional provisioners such as
