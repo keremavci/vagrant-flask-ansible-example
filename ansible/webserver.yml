@@ -12,7 +12,7 @@
     - src_dir: "{{ base_dir }}/src/"
     - app_user_name: testuser
     #python -c 'import crypt; print crypt.crypt("This is my Password", "testpasswd")'
-    - app_user_password : testpasswd
+    - app_user_password : teZm6vo7PsNSc
    tasks:
     - name: Install Requirement Packages
       apt: pkg={{item}} state=installed update_cache=true
