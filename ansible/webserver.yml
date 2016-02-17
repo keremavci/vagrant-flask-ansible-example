@@ -11,8 +11,9 @@
     - ansible_template_dir: "{{ base_dir }}/ansible/templates/"
     - src_dir: "{{ base_dir }}/src/"
     - app_user_name: testuser
-    #python -c 'import crypt; print crypt.crypt("This is my Password", "testpasswd")'
-    - app_user_password : teZm6vo7PsNSc
+     #python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt(getpass.getpass())"
+     #testpasswd    
+    - app_user_password : $6$rounds=656000$VQYUNRCVMRRY2ZRm$q34FN5T7b1kZE1kTJO7ZT1MjZwb7.rDIBuXrOTZAnuFdI3BntiWqtGUDtjKqJXQ8dCVEEFNJBUWgGfS.Deo4c1
    tasks:
     - name: Install Requirement Packages
       apt: pkg={{item}} state=installed update_cache=true
