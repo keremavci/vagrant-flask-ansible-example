@@ -5,7 +5,7 @@
 * Vagrant
 * Ansible
 
-## What do you start this example project?
+## How does it work?
 * Checkout this project
 * Run the following from project directory
 
