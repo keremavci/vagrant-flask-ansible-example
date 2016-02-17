@@ -21,7 +21,7 @@ The project will run 192.168.33.100 ip address as default.
 You can change it in Vagranfile if you need. However don't forget change ip address as same in hosts file as you can see it in ansible directory.
 
 #### Change Gunicorn Listen Port
-You can change Gunicorn listen to the ip and port from listen_addr and listen_port variables that defined in webserver.yml file.you can edit listen_addr and listen port variable in webserver.yml file in ansible directory.
+You can change Gunicorn listen to the ip and port from listen_addr and listen_port variables that defined in webserver.yml file. You can edit listen_addr and listen port variable in webserver.yml file in ansible directory.
 
 
 ## Gereklilikler
