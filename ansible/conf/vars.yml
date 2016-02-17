@@ -1,0 +1,12 @@
+---
+app_name: flask_project
+listen_addr: 0.0.0.0
+listen_port: 5000
+app_dir: /opt/challenge/
+base_dir: ../
+ansible_template_dir: "{{ base_dir }}/ansible/templates/"
+src_dir: "{{ base_dir }}/src/"
+app_user_name: testuser
+  #python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt(getpass.getpass())"
+     #testpasswd    
+app_user_password : $6$rounds=656000$VQYUNRCVMRRY2ZRm$q34FN5T7b1kZE1kTJO7ZT1MjZwb7.rDIBuXrOTZAnuFdI3BntiWqtGUDtjKqJXQ8dCVEEFNJBUWgGfS.Deo4c1

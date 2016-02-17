@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
   # config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "private_network", ip: "192.168.33.100"
   #config.vm.network "public_network"
-
+  config.ssh.username="vagrant"
   config.vm.provider "virtualbox" do |challengevb|
   #   # Display the VirtualBox GUI when booting the machine
   #   vb.gui = true

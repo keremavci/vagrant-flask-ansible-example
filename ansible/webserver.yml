@@ -2,18 +2,8 @@
  - hosts: exampleflaskwebserver
    user: vagrant
    become: yes
-   vars:
-    - app_name: flask_project
-    - listen_addr: 0.0.0.0
-    - listen_port: 5000
-    - app_dir: /opt/challenge/
-    - base_dir: ../
-    - ansible_template_dir: "{{ base_dir }}/ansible/templates/"
-    - src_dir: "{{ base_dir }}/src/"
-    - app_user_name: testuser
-     #python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt(getpass.getpass())"
-     #testpasswd    
-    - app_user_password : $6$rounds=656000$VQYUNRCVMRRY2ZRm$q34FN5T7b1kZE1kTJO7ZT1MjZwb7.rDIBuXrOTZAnuFdI3BntiWqtGUDtjKqJXQ8dCVEEFNJBUWgGfS.Deo4c1
+   vars_files: 
+    - conf/vars.yml
    tasks:
     - name: Install Requirement Packages
       apt: pkg={{item}} state=installed update_cache=true
@@ -23,15 +13,20 @@
         - python-virtualenv
         - supervisor
         - gunicorn
+      run_once: true
     - name: Add user
       user: name={{app_user_name}} password={{app_user_password}}
+      run_once: true
     - name: Create App Directory
       file: path={{app_dir}} state=directory owner={{app_user_name}}
+      run_once: true
     - name: Copy Src to Dest
       copy: src={{ src_dir }} dest={{app_dir}} owner={{app_user_name}}
     - name: Install Flask
       pip: name=flask
+      run_once: true
     - name: Add SuperVisor Conf
       template: src={{ansible_template_dir}}/supervisor.j2 dest=/etc/supervisor/conf.d/{{app_name}}.conf
+      run_once: true
     - name: Add Application to SuperVisor
       supervisorctl: name={{app_name}} state=present
