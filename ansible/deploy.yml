@@ -6,5 +6,7 @@
    tasks:
     - name: Copy Src to Dest
       copy: src={{ src_dir }} dest={{app_dir}} owner={{app_user_name}}
-    - name: Restart Application
+      notify: Restart Application Server
+   handlers:
+    - name: Restart Application Server
       supervisorctl: name={{app_name}} state=restarted
