@@ -20,13 +20,17 @@
     - name: Create App Directory
       file: path={{app_dir}} state=directory owner={{app_user_name}}
       run_once: true
-    - name: Copy Src to Dest
-      copy: src={{ src_dir }} dest={{app_dir}} owner={{app_user_name}}
     - name: Install Flask
       pip: name=flask
       run_once: true
     - name: Add SuperVisor Conf
       template: src={{ansible_template_dir}}/supervisor.j2 dest=/etc/supervisor/conf.d/{{app_name}}.conf
       run_once: true
-    - name: Add Application to SuperVisor
-      supervisorctl: name={{app_name}} state=present
+    - name: Copy Src to Dest
+      copy: src={{ src_dir }} dest={{app_dir}} owner={{app_user_name}}
+      tags: 
+       - deploy
+      notify: Restart Application Server
+   handlers:
+    - name: Restart Application Server
+      supervisorctl: name={{app_name}} state=restarted

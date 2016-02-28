@@ -1,5 +1,4 @@
 [program:{{app_name}}]
 command = gunicorn app:app -b {{listen_addr}}:{{listen_port}}
 directory = {{app_dir}}
-autostart=true
-autorestart=true
+user={{app_user_name}}
