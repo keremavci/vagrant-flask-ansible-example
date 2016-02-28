@@ -7,7 +7,7 @@
 
 ## How does it work?
 * Checkout this project
-* Run the following from project directory
+* Run the following command from project directory
 
         $ vagrant up
 
